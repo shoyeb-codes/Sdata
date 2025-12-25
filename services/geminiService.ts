@@ -18,7 +18,7 @@ export const analyzeData = async (
   // Initialize client with the specific key provided for this call
   const ai = new GoogleGenAI({ apiKey });
   
-  const modelId = "gemini-3-pro-preview"; // Using Pro for complex analysis
+  const modelId = "gemini-2.0-flash"; // Using latest Flash model
   
   const dataContext = getSampleData(dataset, 20); // Provide top 20 rows and stats
   
@@ -69,9 +69,6 @@ export const analyzeData = async (
       config: {
         systemInstruction: systemInstruction,
         responseMimeType: "application/json",
-        thinkingConfig: {
-           thinkingBudget: 2048 // Give it some budget to think about the stats
-        },
         responseSchema: {
           type: Type.OBJECT,
           properties: {
@@ -101,7 +98,7 @@ export const analyzeData = async (
   } catch (error) {
     console.error("Gemini Analysis Error:", error);
     return {
-      answer: "I encountered an error while analyzing the data. Please check if your API Key is valid and has access to Gemini 3 Pro.",
+      answer: "I encountered an error while analyzing the data. Please check if your API Key is valid and has sufficient quota.",
     };
   }
 };
